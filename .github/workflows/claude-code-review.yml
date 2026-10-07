@@ -3,7 +3,18 @@ name: Claude Code Review
 on:
   pull_request:
     branches: [dev]
-    types: [opened, synchronize, ready_for_review, reopened]
+    # No `synchronize`: review once when the PR is opened or marked ready, not on every push.
+    # To review again after changes, re-run the job from the Actions tab.
+    types: [opened, ready_for_review, reopened]
+    # Skip PRs that only touch docs or CI config.
+    paths-ignore:
+      - "**/*.md"
+      - ".github/**"
+
+# Only one review per PR at a time; a newer run cancels the older one.
+concurrency:
+  group: claude-review-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
 
 jobs:
   review:
