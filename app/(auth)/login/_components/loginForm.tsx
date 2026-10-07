@@ -1,26 +1,28 @@
 "use client";
 
 import { EmailField } from "@/components/form/EmailField";
+import { Form } from "@/components/form/Form";
 import { PasswordField } from "@/components/form/PasswordField";
 import { Button } from "@/components/ui/Button";
+import { InfoBox } from "@/components/ui/InfoBox";
 import { Typography } from "@/components/ui/Typography";
 import Link from "next/link";
+import { useLoginForm } from "../_hooks/useLoginForm";
 
 export function LoginForm() {
+  const { form, onSubmit, isPending, errorMsg } = useLoginForm();
+
   return (
-    <form
-      noValidate
-      onSubmit={(e) => e.preventDefault()} //TODO: handle login
-      className="flex flex-col"
-    >
+    <Form form={form} onSubmit={onSubmit} className="flex flex-col ">
       <EmailField name="email" className="mb-[18px]" />
       <PasswordField
         name="password"
         placeholder="Enter your password"
         className="mb-6"
       />
-      <Button type="submit" block>
-        Log in
+      {errorMsg && <InfoBox description={errorMsg} />}
+      <Button type="submit" isLoading={isPending} block className="mt-4">
+        {isPending ? "Logging in…" : "Log in"}
       </Button>
       <Typography variant="ui" tone="muted" className="mt-[22px] text-center">
         Don&apos;t have an account?{" "}
@@ -31,6 +33,6 @@ export function LoginForm() {
           Create one
         </Link>
       </Typography>
-    </form>
+    </Form>
   );
 }
