@@ -30,3 +30,6 @@ jobs:
           # TEMPORARY: print Claude's output to debug empty reviews. Remove once reviews post comments
           # (Actions logs are visible to anyone who can see the repo).
           show_full_output: true
+          # Run sub-agents in the foreground: in CI the run ends when the main agent's turn ends,
+          # which killed the background eligibility check before the review started.
+          settings: '{"env": {"CLAUDE_CODE_DISABLE_BACKGROUND_TASKS": "1"}}'
