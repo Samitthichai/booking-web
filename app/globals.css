@@ -1,26 +1,93 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+/*
+ * QueueUp design tokens — mirrors the QueueUp design system.
+ * Names match the system so `bg-brand`, `text-ink-muted`, `rounded-card`, `shadow-card` read the same in code and in design.
+ */
+@theme {
+  --color-brand: #7c3aed;
+  --color-brand-strong: #6d28d9;
+  --color-brand-tint: #ede9fe;
+  --color-brand-soft: #f5f3ff;
+  --color-brand-line: #ddd6fe;
+  --color-brand-line-strong: #c4b5fd;
+  --color-on-brand: #ffffff;
+  --color-brand-orb: rgb(255 255 255 / 0.08);
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  --color-surface-page: #f6f6fb;
+  --color-surface: #ffffff;
+  --color-surface-input: #fbfbfd;
+  --color-surface-disabled: #f4f4f8;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  --color-line: #ececf4;
+  --color-line-input: #e4e4ed;
+  --color-line-disabled: #eeeef4;
+
+  --color-ink: #0f172a;
+  --color-ink-label: #475569;
+  --color-ink-muted: #64748b;
+  --color-ink-subtle: #94a3b8;
+  --color-ink-disabled: #c0c3cc;
+
+  --color-success-soft: #ecfdf5;
+  --color-success-line: #a7f3d0;
+  --color-success: #059669;
+  --color-success-ink: #047857;
+  --color-warning-soft: #fffbeb;
+  --color-warning-line: #fde68a;
+  --color-warning: #d97706;
+  --color-warning-ink: #92400e;
+  --color-neutral-soft: #f1f5f9;
+  --color-danger-soft: #fff1f2;
+  --color-danger-line: #fecdd3;
+  --color-danger: #e11d48;
+  --color-danger-ink: #9f1239;
+
+  --radius-sm: 10px;
+  --radius-logo-sm: 11px;
+  --radius-md: 12px;
+  --radius-tile: 13px;
+  --radius-chip: 14px;
+  --radius-card-sm: 16px;
+  --radius-card: 18px;
+  --radius-panel: 22px;
+
+  --shadow-card: 0 2px 10px rgb(15 23 42 / 0.04);
+  --shadow-card-hover: 0 20px 44px rgb(15 23 42 / 0.1);
+  --shadow-panel: 0 10px 40px rgb(15 23 42 / 0.06);
+  --shadow-brand: 0 8px 22px rgb(124 58 237 / 0.26);
+  --shadow-brand-hover: 0 14px 30px rgb(124 58 237 / 0.34);
+  --shadow-focus: 0 0 0 4px rgb(124 58 237 / 0.14);
+
+  --animate-rise: rise 0.7s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+  --animate-float: float 5s ease-in-out infinite;
+
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
   }
 }
 
+/* Font variables are set by next/font in app/layout.tsx. */
+@theme inline {
+  --font-display: var(--font-space-grotesk), system-ui, sans-serif;
+  --font-sans: var(--font-plus-jakarta), system-ui, sans-serif;
+}
+
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-surface-page);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
