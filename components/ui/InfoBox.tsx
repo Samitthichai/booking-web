@@ -28,7 +28,7 @@ export type InfoBoxTone = keyof typeof tones;
 
 type InfoBoxProps = {
   tone?: InfoBoxTone;
-  description: string;
+  description: string | React.ReactNode;
   className?: string;
 };
 
