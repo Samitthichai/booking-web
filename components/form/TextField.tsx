@@ -1,29 +1,59 @@
+"use client";
+
 import type { ComponentProps, ReactNode } from "react";
+import { useFormContext } from "react-hook-form";
+import { useField } from "./useField";
 
 export type TextFieldProps = ComponentProps<"input"> & {
   name: string;
   id?: string;
   label: string;
   hint?: string;
-  error?: string;
+  /** Error state: red border + aria-invalid. */
+  error?: boolean;
+  /** Message shown under the field. Implies `error`. */
+  errorMsg?: string;
   endSlot?: ReactNode;
 };
 
-export function TextField({
+export function TextField(props: TextFieldProps) {
+  const form = useFormContext();
+  return form ? (
+    <ConnectedTextField {...props} />
+  ) : (
+    <TextFieldView {...props} />
+  );
+}
+
+function ConnectedTextField(props: TextFieldProps) {
+  const { error, errorMsg, ...field } = useField(props.name);
+  return (
+    <TextFieldView
+      {...props}
+      {...field}
+      error={props.error ?? error}
+      errorMsg={props.errorMsg ?? errorMsg}
+    />
+  );
+}
+
+function TextFieldView({
   id: idProp,
   name,
   label,
   hint,
-  error,
+  error = false,
+  errorMsg,
   endSlot,
   className = "",
   ...props
 }: TextFieldProps) {
   const id = idProp ?? name;
+  const isInvalid = error || Boolean(errorMsg);
   const hintId = `${id}-hint`;
   const errorId = `${id}-error`;
   const describedBy =
-    [hint && !error && hintId, error && errorId].filter(Boolean).join(" ") ||
+    [hint && !errorMsg && hintId, errorMsg && errorId].filter(Boolean).join(" ") ||
     undefined;
 
   return (
@@ -35,13 +65,13 @@ export function TextField({
         <input
           id={id}
           name={name}
-          aria-invalid={error ? true : undefined}
+          aria-invalid={isInvalid || undefined}
           aria-describedby={describedBy}
           className={[
             "w-full rounded-md border bg-surface-input px-[15px] py-[13px] text-[15px] text-ink",
             "placeholder:text-ink-subtle outline-none transition-[border-color,box-shadow] duration-150",
             "focus:border-brand focus:shadow-focus",
-            error ? "border-danger" : "border-line-input",
+            isInvalid ? "border-danger" : "border-line-input",
             endSlot ? "pr-12" : "",
           ].join(" ")}
           {...props}
@@ -52,14 +82,14 @@ export function TextField({
           </div>
         )}
       </div>
-      {hint && !error && (
+      {hint && !errorMsg && (
         <p id={hintId} className="text-xs text-ink-subtle">
           {hint}
         </p>
       )}
-      {error && (
+      {errorMsg && (
         <p id={errorId} className="text-xs text-danger-ink">
-          {error}
+          {errorMsg}
         </p>
       )}
     </div>
