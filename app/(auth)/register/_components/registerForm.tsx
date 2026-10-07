@@ -1,18 +1,18 @@
 "use client";
 
 import { EmailField } from "@/components/form/EmailField";
+import { Form } from "@/components/form/Form";
 import { PasswordField } from "@/components/form/PasswordField";
 import { Button } from "@/components/ui/Button";
+import { InfoBox } from "@/components/ui/InfoBox";
 import { Typography } from "@/components/ui/Typography";
 import Link from "next/link";
+import { useRegisterForm } from "../_hooks/useRegisterForm";
 
 export function RegisterForm() {
+  const { form, onSubmit, errorMsg, isPending } = useRegisterForm();
   return (
-    <form
-      noValidate
-      onSubmit={(e) => e.preventDefault()} //TODO: handle login
-      className="flex flex-col"
-    >
+    <Form form={form} onSubmit={onSubmit} className="flex flex-col">
       <EmailField name="email" className="mb-4" />
       <PasswordField
         name="password"
@@ -26,7 +26,8 @@ export function RegisterForm() {
         placeholder="Re-enter password"
         className="mb-6"
       />
-      <Button type="submit" block>
+      {errorMsg && <InfoBox description={errorMsg} />}
+      <Button type="submit" isLoading={isPending} block className="mt-4">
         Register
       </Button>
       <Typography variant="ui" tone="muted" className="mt-[22px] text-center">
@@ -38,6 +39,6 @@ export function RegisterForm() {
           Log in
         </Link>
       </Typography>
-    </form>
+    </Form>
   );
 }
