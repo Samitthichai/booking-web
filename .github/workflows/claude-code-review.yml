@@ -24,4 +24,9 @@ jobs:
           plugin_marketplaces: "https://github.com/anthropics/claude-code.git"
           plugins: "code-review@claude-code-plugins"
           prompt: "/code-review:code-review --comment ${{ github.repository }}/pull/${{ github.event.pull_request.number }}"
-          claude_args: '--allowedTools "mcp__github_inline_comment__create_inline_comment"'
+          # Read-only access so the review can fetch the PR diff and open repo files.
+          claude_args: >-
+            --allowedTools "mcp__github_inline_comment__create_inline_comment,Bash(gh pr view:*),Bash(gh pr diff:*),Bash(gh pr comment:*),Bash(gh pr list:*),Bash(gh issue view:*),Bash(gh search:*),Read,Grep,Glob"
+          # TEMPORARY: print Claude's output to debug empty reviews. Remove once reviews post comments
+          # (Actions logs are visible to anyone who can see the repo).
+          show_full_output: true
