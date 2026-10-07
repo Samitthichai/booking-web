@@ -30,7 +30,13 @@
   --color-ink-disabled: #c0c3cc;
 
   --color-success-soft: #ecfdf5;
+  --color-success-line: #a7f3d0;
+  --color-success: #059669;
   --color-success-ink: #047857;
+  --color-warning-soft: #fffbeb;
+  --color-warning-line: #fde68a;
+  --color-warning: #d97706;
+  --color-warning-ink: #92400e;
   --color-neutral-soft: #f1f5f9;
   --color-danger-soft: #fff1f2;
   --color-danger-line: #fecdd3;

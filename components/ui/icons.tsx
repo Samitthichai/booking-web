@@ -62,3 +62,32 @@ export function EyeOffIcon(props: IconProps) {
     </svg>
   );
 }
+
+export function AlertCircleIcon(props: IconProps) {
+  return (
+    <svg {...base} {...props}>
+      <circle cx="12" cy="12" r="9" />
+      <line x1="12" y1="8" x2="12" y2="13" />
+      <line x1="12" y1="16.5" x2="12" y2="16.6" />
+    </svg>
+  );
+}
+
+export function AlertTriangleIcon(props: IconProps) {
+  return (
+    <svg {...base} {...props}>
+      <path d="M10.3 3.9 2.4 17.6A2 2 0 0 0 4.1 20.6h15.8a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z" />
+      <line x1="12" y1="9" x2="12" y2="13" />
+      <line x1="12" y1="17" x2="12" y2="17.1" />
+    </svg>
+  );
+}
+
+export function CheckCircleIcon(props: IconProps) {
+  return (
+    <svg {...base} {...props}>
+      <circle cx="12" cy="12" r="9" />
+      <polyline points="8 12.5 11 15.5 16 9.5" />
+    </svg>
+  );
+}
