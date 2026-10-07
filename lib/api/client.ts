@@ -35,3 +35,9 @@ http.interceptors.response.use(
     return Promise.reject(new ApiError(NETWORK_ERROR, "Network error"));
   },
 );
+
+declare module "@tanstack/react-query" {
+  interface Register {
+    defaultError: ApiError;
+  }
+}
