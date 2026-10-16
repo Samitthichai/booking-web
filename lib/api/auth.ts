@@ -1,4 +1,8 @@
-import { LoginInput, RegisterInput } from "@/lib/schemas/auth";
+import {
+  AdminRegisterInput,
+  LoginInput,
+  RegisterInput,
+} from "@/lib/schemas/auth";
 import { AuthResponse } from "@/lib/types/auth";
 import { useMutation } from "@tanstack/react-query";
 import { http } from "./client";
@@ -13,6 +17,15 @@ export const authApi = {
     const { data } = await http.post<AuthResponse>("/api/auth/register", input);
     return data;
   },
+
+  registerAdmin: async (input: AdminRegisterInput) => {
+    const { data } = await http.post<AuthResponse>("/api/admin/register", {
+      email: input.email,
+      password: input.password,
+      invite_code: input.invite_code,
+    });
+    return data;
+  },
 };
 
 export function useLogin() {
@@ -21,4 +34,8 @@ export function useLogin() {
 
 export function useRegister() {
   return useMutation({ mutationFn: authApi.register });
+}
+
+export function useRegisterAdmin() {
+  return useMutation({ mutationFn: authApi.registerAdmin });
 }
