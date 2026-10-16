@@ -22,7 +22,6 @@ export function AdminSidebar() {
   const router = useRouter();
 
   const signOut = () => {
-    // No BE logout endpoint yet; return to the admin sign-in screen.
     router.replace("/admin/login");
   };
 
