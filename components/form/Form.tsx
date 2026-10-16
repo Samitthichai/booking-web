@@ -8,20 +8,25 @@ import {
   type UseFormReturn,
 } from "react-hook-form";
 
-type FormProps<T extends FieldValues> = Omit<
-  ComponentProps<"form">,
-  "onSubmit"
-> & {
-  form: UseFormReturn<T>;
-  onSubmit: SubmitHandler<T>;
+type FormProps<
+  TFieldValues extends FieldValues,
+  TContext,
+  TTransformedValues,
+> = Omit<ComponentProps<"form">, "onSubmit"> & {
+  form: UseFormReturn<TFieldValues, TContext, TTransformedValues>;
+  onSubmit: SubmitHandler<TTransformedValues>;
 };
 
-export function Form<T extends FieldValues>({
+export function Form<
+  TFieldValues extends FieldValues,
+  TContext = unknown,
+  TTransformedValues = TFieldValues,
+>({
   form,
   onSubmit,
   children,
   ...props
-}: FormProps<T>) {
+}: FormProps<TFieldValues, TContext, TTransformedValues>) {
   return (
     <FormProvider {...form}>
       <form noValidate onSubmit={form.handleSubmit(onSubmit)} {...props}>
