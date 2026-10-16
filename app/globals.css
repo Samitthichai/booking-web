@@ -14,6 +14,13 @@
   --color-on-brand: #ffffff;
   --color-brand-orb: rgb(255 255 255 / 0.08);
 
+  /* Admin auth screens (dark) */
+  --color-admin-bg: #141022;
+  --color-admin-orb: rgb(124 58 237 / 0.22);
+  --color-admin-chip: rgb(124 58 237 / 0.2);
+  --color-admin-chip-ink: #c4b5fd;
+  --color-admin-muted: #a1a1b5;
+
   --color-surface-page: #f6f6fb;
   --color-surface: #ffffff;
   --color-surface-input: #fbfbfd;
