@@ -10,6 +10,9 @@ export function proxy(request: NextRequest) {
     return NextResponse.next();
   }
 
+  // Presence of a session only. The JWT is httpOnly and signed, so the admin
+  // role is verified server-side in app/admin/(dashboard)/layout.tsx, which
+  // sends non-admins to the customer app.
   if (!request.cookies.has("token")) {
     const isAdmin = pathname.startsWith("/admin");
     const login = new URL(isAdmin ? "/admin/login" : "/login", request.url);
