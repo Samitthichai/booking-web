@@ -3,6 +3,7 @@
 import { useLogin } from "@/lib/api/auth";
 import { type LoginInput, loginSchema } from "@/lib/schemas/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { AuthErrorMessageMapper } from "../../_lib/authErrorMessageMapper";
 
@@ -15,11 +16,13 @@ export function useLoginForm() {
 
   const { clearErrors, setError } = form;
   const login = useLogin();
+  const router = useRouter();
 
   const onSubmit = (data: LoginInput) => {
     login.mutate(data, {
       onSuccess: () => {
         clearErrors();
+        router.replace("/services");
       },
       onError: (error) => {
         if (error.status === 401) {
