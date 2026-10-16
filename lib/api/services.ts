@@ -5,7 +5,12 @@ import {
   ServiceResponse,
   ServicesListResponse,
 } from "@/lib/types/service";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+  useMutation,
+  useQuery,
+  useQueryClient,
+  useSuspenseQuery,
+} from "@tanstack/react-query";
 import { http } from "./client";
 
 export const servicesKeys = {
@@ -56,6 +61,13 @@ export const servicesApi = {
 
 export function useServices() {
   return useQuery({ queryKey: servicesKeys.all, queryFn: servicesApi.list });
+}
+
+export function useServicesSuspense() {
+  return useSuspenseQuery({
+    queryKey: servicesKeys.all,
+    queryFn: servicesApi.list,
+  });
 }
 
 export function useAdminServices() {

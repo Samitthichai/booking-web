@@ -1,4 +1,7 @@
+import { ErrorBoundary } from "@/components/ui/ErrorBoundary";
+import { Loading } from "@/components/ui/Loading";
 import { Typography } from "@/components/ui/Typography";
+import { Suspense } from "react";
 import { ServiceGrid } from "./_components/ServiceGrid";
 
 export default function ServicesPage() {
@@ -11,7 +14,11 @@ export default function ServicesPage() {
         </Typography>
       </header>
 
-      <ServiceGrid />
+      <ErrorBoundary>
+        <Suspense fallback={<Loading label="Loading services…" />}>
+          <ServiceGrid />
+        </Suspense>
+      </ErrorBoundary>
     </main>
   );
 }
