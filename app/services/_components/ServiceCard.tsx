@@ -26,7 +26,7 @@ export function ServiceCard({ service }: { service: Service }) {
           </span>
         </span>
         <Link
-          href={`/booking?service=${service.id}`}
+          href={`/services/${service.id}`}
           className="rounded-md bg-brand px-5 py-2.5 text-[14px] font-semibold text-on-brand shadow-brand transition hover:-translate-y-0.5 hover:shadow-brand-hover"
         >
           Book
