@@ -20,7 +20,7 @@ export const TIME_SLOTS_MOCK: { time: string; booked?: boolean }[] = [
   { time: "14:30" },
 ];
 
-type Props = {
+type DateSelectionProps = {
   date: Date | undefined;
   onSelectDate: (date: Date | undefined) => void;
   selectedTime: string;
@@ -34,7 +34,7 @@ export default function DateSelection({
   selectedTime,
   onSelectTime,
   conflict,
-}: Props) {
+}: DateSelectionProps) {
   const today = useMemo(() => {
     const d = new Date();
     d.setHours(0, 0, 0, 0);

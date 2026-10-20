@@ -2,7 +2,7 @@
 
 import { Typography } from "@/components/ui/Typography";
 import { useServicesSuspense } from "@/lib/api/services";
-import { useState } from "react";
+import { useDetailServices } from "../_hooks/useDetailServices";
 import BackLink from "./BackLink";
 import { BookingFooter } from "./BookingFooter";
 import DateSelection from "./DateSelection";
@@ -12,9 +12,14 @@ export function ServiceDetail({ id }: { id: number }) {
   const { data: services } = useServicesSuspense();
   const service = services.find((s) => s.id === id);
 
-  const [date, setDate] = useState<Date | undefined>(() => new Date());
-  const [selectedTime, setSelectedTime] = useState("10:00");
-  const [conflict, setConflict] = useState(false);
+  const {
+    date,
+    selectedTime,
+    conflict,
+    handleSelectDate,
+    handleSelectTime,
+    handleConfirm,
+  } = useDetailServices();
 
   if (!service) {
     return (
@@ -39,15 +44,9 @@ export function ServiceDetail({ id }: { id: number }) {
 
       <DateSelection
         date={date}
-        onSelectDate={(next) => {
-          setDate(next);
-          setConflict(false);
-        }}
+        onSelectDate={handleSelectDate}
         selectedTime={selectedTime}
-        onSelectTime={(time) => {
-          setSelectedTime(time);
-          setConflict(false);
-        }}
+        onSelectTime={handleSelectTime}
         conflict={conflict}
       />
 
@@ -55,7 +54,7 @@ export function ServiceDetail({ id }: { id: number }) {
         service={service}
         date={date}
         selectedTime={selectedTime}
-        onConfirm={() => setConflict(true)}
+        onConfirm={handleConfirm}
       />
     </div>
   );
